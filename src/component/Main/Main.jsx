@@ -2,10 +2,11 @@ import { useState } from 'react'
 import './Main.css'
 import Recipe from '../CloadRecipe/Recipe'
 import ListIngredients from '../IngredientList/ListIngredient'
+import { getRecipeFromMistral } from '../../ai'
 
 export default function Main() {
     const [ingredients, setIngredient] = useState([])
-    const [showRecipe, setRecipeShown] = useState(false)
+    const [showRecipe, setRecipeShown] = useState('')
 
     const ingredientList = ingredients.map(ingredient => (
         <li key={ingredient}> {ingredient} </li>
@@ -16,8 +17,11 @@ export default function Main() {
         setIngredient(prevIngridient => [...prevIngridient, newIngredient])
     }
 
-    function toggleShowRecipe (){
-        setRecipeShown(prevShown => !prevShown)
+    async function getRecipe() {
+        const recipeMarkdown = await getRecipeFromMistral(ingredients)
+        console.log(recipeMarkdown)
+        setRecipeShown(recipeMarkdown)
+
     }
     
 
@@ -40,11 +44,11 @@ export default function Main() {
                 <ListIngredients 
                     length={ingredients.length}
                     ingredient={ingredientList}
-                    toggle={toggleShowRecipe}
+                    getRecipe={ getRecipe }
                 /> : null   
             }
 
-            {showRecipe && <Recipe /> }
+            {showRecipe && <Recipe recipe = {showRecipe} /> }
         </main>
     )
 }

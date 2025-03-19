@@ -1,4 +1,3 @@
-import VITE_HF_ACCESS_TOKEN from '.env.local'
 import { HfInference } from '@huggingface/inference'
 
 const API_KEY = import.meta.env.VITE_HF_ACCESS_TOKEN
@@ -11,13 +10,16 @@ const SYSTEM_PROMPT = `
     Format your response in markdown to make it easier to render to a web page
 `
 
-const hf = new HfInference(process.env.VITE_HF_ACCESS_TOKEN)
+// process.env.VITE_HF_ACCESS_TOKEN
+
+const hf = new HfInference(API_KEY)
 
 export async function getRecipeFromMistral(ingredientsArr){
     const ingredientsString = ingredientsArr.join(', ')
     try{
         const response = await hf.chatCompletion({
-            model: "mistralai/Mixtral-8x78-Instruct-v0.1",
+            model: "mistralai/Mixtral-8x7B-Instruct-v0.1",
+                   
             messages: [
                 { role: "system", content: SYSTEM_PROMPT },
                 { role: "user", content: `I have ${ingredientsString}, please give me a recipe you'd recommend I make!`},
