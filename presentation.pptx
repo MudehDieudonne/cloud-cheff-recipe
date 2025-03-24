@@ -1,0 +1,45 @@
+# Slide 1: Title Slide
+## Project Title: Cheff Claude
+### Overview: A React application for managing ingredients and fetching recipes using AI.
+
+# Slide 2: Introduction
+- Cheff Claude is a cooking assistant application.
+- Allows users to add ingredients and fetch recipes based on those ingredients.
+
+# Slide 3: Technologies Used
+- React: A JavaScript library for building user interfaces.
+- Vite: A build tool that provides a fast development environment.
+
+# Slide 4: Project Structure
+- Overview of the file structure:
+  - src/
+    - components/
+    - App.jsx
+    - index.jsx
+  - public/
+  - README.md
+
+# Slide 5: Header Component
+- Displays the application logo and title.
+- Simple functional component.
+
+# Slide 6: Main Component
+- Manages the list of ingredients.
+- Allows users to add ingredients and fetch recipes.
+- Integrates with the AI service to get recipes.
+
+# Slide 7: Recipe Component
+- Displays the fetched recipe using Markdown.
+- Provides a user-friendly view of the recipe content.
+
+# Slide 8: AI Integration
+- Uses the `getRecipeFromMistral` function to fetch recipes based on user input.
+- Integrates AI to provide personalized recipe suggestions.
+
+# Slide 9: User Interaction
+- Users can add ingredients through a form.
+- Recipes are displayed based on the ingredients provided.
+
+# Slide 10: Conclusion
+- Cheff Claude is a functional cooking assistant.
+- Future improvements could include more features and better AI integration.

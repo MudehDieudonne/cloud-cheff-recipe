@@ -3,10 +3,12 @@ import './Main.css'
 import Recipe from '../CloadRecipe/Recipe'
 import ListIngredients from '../IngredientList/ListIngredient'
 import { getRecipeFromMistral } from '../../ai'
+import { Loading } from '../Loader/Loader'
 
 export default function Main() {
     const [ingredients, setIngredient] = useState([])
     const [showRecipe, setRecipeShown] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     const ingredientList = ingredients.map(ingredient => (
         <li key={ingredient}> {ingredient} </li>
@@ -18,9 +20,16 @@ export default function Main() {
     }
 
     async function getRecipe() {
-        const recipeMarkdown = await getRecipeFromMistral(ingredients)
-        console.log(recipeMarkdown)
-        setRecipeShown(recipeMarkdown)
+        try {
+            setIsLoading(true)
+            const recipeMarkdown = await getRecipeFromMistral(ingredients)
+            setRecipeShown(recipeMarkdown)
+        } catch (error) {
+            console.error("Error fetching recipe:", error)
+        } finally {
+            setIsLoading(false)
+        }
+        
 
     }
     
@@ -32,6 +41,7 @@ export default function Main() {
                     type="text"
                     placeholder="Add ingredient e.g Orange"
                     name='ingredient'
+                    required
                 />
                 <button>Add Ingredient</button>
             </form>
@@ -45,10 +55,13 @@ export default function Main() {
                     length={ingredients.length}
                     ingredient={ingredientList}
                     getRecipe={ getRecipe }
+                    isLoading={isLoading}
                 /> : null   
             }
 
-            {showRecipe && <Recipe recipe = {showRecipe} /> }
+            {isLoading && ( <Loading /> )}
+
+            {showRecipe && !isLoading && <Recipe recipe = {showRecipe} /> }
         </main>
     )
 }

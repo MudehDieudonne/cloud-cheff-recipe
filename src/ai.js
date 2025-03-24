@@ -19,7 +19,6 @@ export async function getRecipeFromMistral(ingredientsArr){
     try{
         const response = await hf.chatCompletion({
             model: "mistralai/Mixtral-8x7B-Instruct-v0.1",
-                   
             messages: [
                 { role: "system", content: SYSTEM_PROMPT },
                 { role: "user", content: `I have ${ingredientsString}, please give me a recipe you'd recommend I make!`},
